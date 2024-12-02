@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CPP and OpenFOAM Programming</title>
+
+
+        <link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/moon.css" id="theme">
+
+		<!-- Theme used for syntax highlighted code -->
+		<!-- <link rel="stylesheet" href="../../node_modules/highlight.js/styles/atom-one-dark.css"> -->
+        <link rel="stylesheet" href="../node_modules/highlight.js/styles/tokyo-night-dark.css" id="highlight-theme">
+        <style type="text/css">
+            .reveal p {
+              text-align: left;
+            }
+          </style>
+        <style type="text/css">
+            .twoColContainer{
+                display:flex;
+            /*outline:3px dotted blue;*/
+            }
+            .colRCLI{
+		        flex:3;
+                position:relative;
+                /*outline:1px solid red;*/
+	        }
+	        .colLCLI{
+		        flex:2;
+		        text-align:left;
+                align-self:flex-start;
+                align-items:flex-start;
+		        font-size:80%;
+		        top:0;
+		        position:relative;
+                overflow:visible;
+                /*outline: 1px solid grey;*/
+	        }
+            .colL{
+                flex:2;
+                position:relative;
+                text-align:left;
+                /*outline: 1px solid grey;*/
+            }
+            .colR{
+                flex:1;
+                position:relative;
+                /*outline: 1px solid red;*/
+            }
+
+            .colLEven{
+                flex:1;
+                position:relative;
+                text-align:left;
+                /*outline: 1px solid grey;*/
+            }
+            .colREven{
+                flex:1;
+                position:relative;
+                text-align:left;
+                /*outline: 1px solid red;*/
+            }
+        </style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-auto-animate data-background-image="mars.jpg" data-background-opacity="0.2">
+                    <h2>Lecture1</h2>
+                    <h3>基本类型</h3>
+                </section>
+                
+                <section data-auto-animate>
+                    <h2 data-id="func">Gather和Scatter例子</h2>
+                    <pre class="fragment"><code data-line-numbers data-trim class="c++">
+                        <script type="text/template">
+                            #include "fvCFD.H"
+
+                            int main(int argc, char* argv[]) {
+                                Info << "Hello OpenFOAM\n";
+                                return 0;
+                            }
+                        </script>
+                    </code></pre>
+                </section>
+
+
+			</div>
+		</div>
+
+        <script src="../dist/reveal.js"></script>
+        <script src="../plugin/zoom/zoom.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/search/search.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+        <script src="../plugin/highlight/highlight.js"></script>
+		<!-- <script src="https://rs-math.net/beamerkiller/reveal.js/plugin/highlight/highlight.js"></script> -->
+        <script src="../plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				// navigationMode : "grid",
+                // autoPlayMedia: true,
+				// transition: 'fade',
+				// markdown: { smartypants: true }, 
+                hashOneBasedIndex: true,
+                slideNumber: 'c/t',
+                column: {
+                    // 列数
+                    count: 2,
+                    // 列宽百分比
+                    width: '40%',
+                    // 间距
+                    gutter: 10 
+                },
+				plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>
+
