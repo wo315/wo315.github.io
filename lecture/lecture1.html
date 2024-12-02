@@ -70,12 +70,11 @@
 		<div class="reveal">
 			<div class="slides">
 				<section data-auto-animate data-background-image="mars.jpg" data-background-opacity="0.2">
-                    <h2>Lecture1</h2>
-                    <h3>基本类型</h3>
+                    <h2>Lecture1 基本类型</h2>
                 </section>
                 
                 <section data-auto-animate>
-                    <h2 data-id="func">Gather和Scatter例子</h2>
+                    <h2 data-id="func">输出Hello OpenFOAM</h2>
                     <pre class="fragment"><code data-line-numbers data-trim class="c++">
                         <script type="text/template">
                             #include "fvCFD.H"
@@ -86,8 +85,147 @@
                             }
                         </script>
                     </code></pre>
+                    <pre class="fragment"><code data-line-numbers data-trim class="bash">
+                        <script type="text/template">
+                            g++ -std=c++11 main.cpp && ./a.out
+                        </script>
+                    </code></pre>
                 </section>
 
+                <section data-auto-animate>
+                    <h2 data-id="func">OpenFOAM基本数据类型一</h2>
+                    <pre class="fragment"><code data-line-numbers data-trim class="c++">
+                        <script type="text/template">
+                            #include "fvCFD.H"
+
+                            int main(int argc, char* argv[]) {
+
+                                label number = 2406;    // int
+                                scalar pi = 3.1415926;  // double
+                                vector vec{1, 2, 3};    // 3D vector, not std::vector<typename Tp>
+                                tensro ten{1, 2, 3, 4, 5, 6, 7, 8, 9}; // 2nd tensor have 9 component in 3D space
+
+                                Info << number << nl;
+                                Info << pi << nl;
+                                Info << vec << nl;
+                                Info << ten << nl;
+                                return 0;
+                            }
+                            
+                        </script>
+                    </code></pre>
+                    <pre class="fragment"><code data-line-numbers data-trim class="bash">
+                        <script type="text/template">
+                            g++ -std=c++11 main.cpp && ./a.out
+                        </script>
+                    </code></pre>
+                </section>
+
+                <section data-auto-animate>
+                    <h2 data-id="func">OpenFOAM条件分支</h2>
+                    <pre class="fragment"><code data-line-numbers data-trim class="c++">
+                        <script type="text/template">
+                            #include "fvCFD.H"
+
+                            int main(int argc, char* argv[]) {
+                                // #include "setRootCase.H"
+                                Foam::argList args(argc, argv);
+                                if (!args.checkRootCase()) {
+                                    Foam::FatalError.exit();
+                                }
+                                return 0;
+                            }
+                            
+                        </script>
+                    </code></pre>
+                    <pre class="fragment"><code data-line-numbers data-trim class="bash">
+                        <script type="text/template">
+                            g++ -std=c++11 main.cpp && ./a.out
+                        </script>
+                    </code></pre>
+                </section>
+
+                <section data-auto-animate>
+                    <h2 data-id="func">OpenFOAM循环语句一</h2>
+                    <pre class="fragment"><code data-line-numbers data-trim class="c++">
+                        <script type="text/template">
+                            #include "fvCFD.H"
+
+                            int main(int argc, char* argv[]) {
+                                List<scalar> lst{1, 2, 3, 4, 5, 6};
+
+                                for(size_t i = 0; i < lst.size(); ++i)
+                                    Info << lst[i] << " ";
+                                Info << nl;
+
+                                for(int i = lst.size() - 1; i >= 0; --i)
+                                    Info << lst[i] << " ";
+                                Info << nl;
+
+                                for(const auto&e : lst) {
+                                    Info << e << " ";
+                                }
+                                Info << nl;
+
+                                for(auto it = lst.begin(); it != lst.end(); ++it) {
+                                    Info << *it << " ";
+                                }
+                                Info << nl;
+                                return 0;
+                            }
+                            
+                        </script>
+                    </code></pre>
+                    <pre class="fragment"><code data-line-numbers data-trim class="bash">
+                        <script type="text/template">
+                            g++ -std=c++11 main.cpp && ./a.out
+                        </script>
+                    </code></pre>
+                </section>
+
+                <section data-auto-animate>
+                    <h2 data-id="func">OpenFOAM循环语句二</h2>
+                    <pre class="fragment"><code data-line-numbers data-trim class="c++">
+                        <script type="text/template">
+                            #include "fvCFD.H"
+
+                            int main(int argc, char* argv[]) {
+                                List<scalar> lst{1, 2, 3, 4, 5, 6};
+
+                                forAll(lst, i)
+                                    Info << lst[i] << " ";
+                                Info << " " << nl;
+                            
+                                forAllReverse(lst, elem)
+                                    Info << elem << " ";
+                            
+                                forAllIters(lst, it)
+                                    Info << *it << " ";
+                                Info << " " << nl;
+                            
+                                forAllConstIters(lst, it)
+                                    Info << *it << " ";
+                                Info << " " << nl;
+                            
+                                forAllReverseIters(lst, it)
+                                    Info << *it << " ";
+                                Info << " " << nl;
+                            
+                                forAllConstIters(lst, it)
+                                    Info << *it << " ";
+                                Info << " " << nl;
+
+                                return 0;
+                            }
+                            
+                        </script>
+                    </code></pre>
+                    <pre class="fragment"><code data-line-numbers data-trim class="bash">
+                        <script type="text/template">
+                            g++ -std=c++11 main.cpp && ./a.out
+                        </script>
+                    </code></pre>
+                </section>
 
 			</div>
 		</div>
