@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CPP and OpenFOAM Programming</title>
+
+
+        <link rel="stylesheet" href="../dist/reset.css">
+		<link rel="stylesheet" href="../dist/reveal.css">
+		<link rel="stylesheet" href="../dist/theme/moon.css" id="theme">
+
+		<!-- Theme used for syntax highlighted code -->
+		<!-- <link rel="stylesheet" href="../../node_modules/highlight.js/styles/atom-one-dark.css"> -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/tokyo-night-dark.css" id="highlight-theme">
+        <style type="text/css">
+            .reveal p {
+              text-align: left;
+            }
+          </style>
+        <style type="text/css">
+            .twoColContainer{
+                display:flex;
+            /*outline:3px dotted blue;*/
+            }
+            .colRCLI{
+		        flex:3;
+                position:relative;
+                /*outline:1px solid red;*/
+	        }
+	        .colLCLI{
+		        flex:2;
+		        text-align:left;
+                align-self:flex-start;
+                align-items:flex-start;
+		        font-size:80%;
+		        top:0;
+		        position:relative;
+                overflow:visible;
+                /*outline: 1px solid grey;*/
+	        }
+            .colL{
+                flex:2;
+                position:relative;
+                text-align:left;
+                /*outline: 1px solid grey;*/
+            }
+            .colR{
+                flex:1;
+                position:relative;
+                /*outline: 1px solid red;*/
+            }
+
+            .colLEven{
+                flex:1;
+                position:relative;
+                text-align:left;
+                /*outline: 1px solid grey;*/
+            }
+            .colREven{
+                flex:1;
+                position:relative;
+                text-align:left;
+                /*outline: 1px solid red;*/
+            }
+        </style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-auto-animate data-background-image="mars.jpg" data-background-opacity="0.2">
+                    <h2>Lecture2 函数一</h2>
+                </section>
+                
+                <section data-auto-animate>
+                    <h2 data-id="func">输出Hello OpenFOAM</h2>
+                    <pre class="fragment"><code data-line-numbers data-trim class="c++">
+                        <script type="text/template">
+                            #include "fvCFD.H"
+
+                            int main(int argc, char* argv[]) {
+                                Info << "Hello OpenFOAM\n";
+                                return 0;
+                            }
+                        </script>
+                    </code></pre>
+                    <pre class="fragment"><code data-line-numbers data-trim class="bash">
+                        <script type="text/template">
+                            g++ -std=c++11 main.cpp && ./a.out
+                        </script>
+                    </code></pre>
+                </section>
+
+                <section data-auto-animate>
+                    <h2 data-id="func">OpenFOAM基本数据类型一</h2>
+                    <pre class="fragment"><code data-line-numbers data-trim class="c++">
+                        <script type="text/template">
+                            #include "fvCFD.H"
+
+                            int main(int argc, char* argv[]) {
+
+                                label number = 2406;    // int
+                                scalar pi = 3.1415926;  // double
+                                vector vec{1, 2, 3};    // 3D vector, not std::vector<typename Tp>
+                                tensor ten{1, 2, 3, 4, 5, 6, 7, 8, 9}; // 2nd tensor have 9 component in 3D space
+
+                                Info << number << nl;
+                                Info << pi << nl;
+                                Info << vec << nl;
+                                Info << ten << nl;
+                                return 0;
+                            }
+                            
+                        </script>
+                    </code></pre>
+                    <pre class="fragment"><code data-line-numbers data-trim class="bash">
+                        <script type="text/template">
+                            g++ -std=c++11 main.cpp && ./a.out
+                        </script>
+                    </code></pre>
+                </section>
+
+                <section data-auto-animate>
+                    <h2 data-id="func">OpenFOAM条件分支</h2>
+                    <pre class="fragment"><code data-line-numbers data-trim class="c++">
+                        <script type="text/template">
+                            #include "fvCFD.H"
+
+                            int main(int argc, char* argv[]) {
+                                // #include "setRootCase.H"
+                                Foam::argList args(argc, argv);
+                                if (!args.checkRootCase()) {
+                                    Foam::FatalError.exit();
+                                }
+                                return 0;
+                            }
+                            
+                        </script>
+                    </code></pre>
+                    <pre class="fragment"><code data-line-numbers data-trim class="bash">
+                        <script type="text/template">
+                            g++ -std=c++11 main.cpp && ./a.out
+                        </script>
+                    </code></pre>
+                </section>
+
+                <section data-auto-animate>
+                    <h2 data-id="func">OpenFOAM循环语句一</h2>
+                    <pre class="fragment"><code data-line-numbers data-trim class="c++">
+                        <script type="text/template">
+                            #include "fvCFD.H"
+
+                            int main(int argc, char* argv[]) {
+                                List<scalar> lst{1, 2, 3, 4, 5, 6};
+
+                                for(size_t i = 0; i < lst.size(); ++i)
+                                    Info << lst[i] << " ";
+                                Info << nl;
+
+                                for(int i = lst.size() - 1; i >= 0; --i)
+                                    Info << lst[i] << " ";
+                                Info << nl;
+
+                                for(const auto&e : lst) {
+                                    Info << e << " ";
+                                }
+                                Info << nl;
+
+                                for(auto it = lst.begin(); it != lst.end(); ++it) {
+                                    Info << *it << " ";
+                                }
+                                Info << nl;
+                                return 0;
+                            }
+                            
+                        </script>
+                    </code></pre>
+                    <pre class="fragment"><code data-line-numbers data-trim class="bash">
+                        <script type="text/template">
+                            g++ -std=c++11 main.cpp && ./a.out
+                        </script>
+                    </code></pre>
+                </section>
+
+                <section data-auto-animate>
+                    <h2 data-id="func">OpenFOAM循环语句二</h2>
+                    <pre class="fragment"><code data-line-numbers data-trim class="c++">
+                        <script type="text/template">
+                            #include "fvCFD.H"
+
+                            int main(int argc, char* argv[]) {
+                                List<scalar> lst{1, 2, 3, 4, 5, 6};
+
+                                forAll(lst, i)
+                                    Info << lst[i] << " ";
+                                Info << " " << nl;
+                            
+                                forAllReverse(lst, i)
+                                    Info << lst[i] << " ";
+                                Info << " " << nl;
+                            
+                                forAllIters(lst, it)
+                                    Info << *it << " ";
+                                Info << " " << nl;
+                            
+                                forAllConstIters(lst, it)
+                                    Info << *it << " ";
+                                Info << " " << nl;
+                            
+                                forAllReverseIters(lst, it)
+                                    Info << *it << " ";
+                                Info << " " << nl;
+                            
+                                forAllConstIters(lst, it)
+                                    Info << *it << " ";
+                                Info << " " << nl;
+                                
+
+                                return 0;
+                            }
+                            
+                        </script>
+                    </code></pre>
+                    <pre class="fragment"><code data-line-numbers data-trim class="bash">
+                        <script type="text/template">
+                            g++ -std=c++11 main.cpp && ./a.out
+                        </script>
+                    </code></pre>
+                </section>
+                
+                <section>
+                    <h2><a href="./demo1.zip">Lecture1 基本数据类型一</a></h2>
+                </section>
+
+			</div>
+		</div>
+
+        <script src="../dist/reveal.js"></script>
+        <script src="../plugin/zoom/zoom.js"></script>
+		<script src="../plugin/notes/notes.js"></script>
+		<script src="../plugin/search/search.js"></script>
+		<script src="../plugin/markdown/markdown.js"></script>
+        <script src="../plugin/highlight/highlight.js"></script>
+		<!-- <script src="https://rs-math.net/beamerkiller/reveal.js/plugin/highlight/highlight.js"></script> -->
+        <script src="../plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				// navigationMode : "grid",
+                // autoPlayMedia: true,
+				// transition: 'fade',
+				// markdown: { smartypants: true }, 
+                hashOneBasedIndex: true,
+                slideNumber: 'c/t',
+                column: {
+                    // 列数
+                    count: 2,
+                    // 列宽百分比
+                    width: '40%',
+                    // 间距
+                    gutter: 10 
+                },
+				plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight, RevealMath.KaTeX ],
+			});
+		</script>
+	</body>
+</html>
+
